@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+
+
+
+<html>
+
+<head>
+
+    <link rel="stylesheet" href="css/all.min.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="shortcut icon" type="image/svg" href="image/virus.svg" />
+    <title>Covid-19 Live</title>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <!--===============================================================================================-->
+    <script>
+        fetch("https://api.covid19api.com/summary")
+        .then(res => res.json())
+          .then(data => {
+              document.getElementById("global-id").innerHTML = data['Global'].TotalConfirmed;
+              document.getElementById("Deathes-id").innerHTML = data['Global'].TotalDeaths;
+              document.getElementById("recovered-id").innerHTML = data['Global'].TotalRecovered;
+
+            }).catch(err => {
+               console.error('Error: ', err);
+           });
+    </script>
+    <script>
+        function choice (id){
+            
+            fetch("https://api.covid19api.com/total/country/".concat(id))
+        .then(res => res.json())
+          .then(data => {
+            console.log(data[data.length - 1]);
+              document.getElementById("global-id").innerHTML = data[data.length - 1].Confirmed;
+              document.getElementById("Deathes-id").innerHTML = data[data.length - 1].Deaths;
+              document.getElementById("recovered-id").innerHTML = data[data.length - 1].Recovered;
+
+            }).catch(err => {
+               console.error('Error: ', err);
+           });
+            
+        }
+    </script>
+    <script>
+        fetch("https://api.covid19api.com/countries")
+        .then(res => res.json())
+          .then(data => {
+            data.map((country) => {
+                // console.log(country);
+                
+                var option = document.createElement("option");
+                option.text = country.Country;
+                option.value = country.Slug
+                var select = document.getElementById("selecta");
+                select.appendChild(option);
+            })
+              
+              
+
+            }).catch(err => {
+               console.error('Error: ', err);
+           });
+    </script>
+</head>
+
+
+<body>
+    <div style="background-color: rgb(123, 211, 221);">
+        <nav style="background-color:transparent" class="navbar navbar-expand-lg navbar-light bg-transparent ">
+
+            <div class="container">
+                <a class="navbar-brand" href="#"><img style="height: 90px; width: 90px;" src="image/virus.svg"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item active">
+                            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+
+
+
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <div style="margin-left: 160px; width: 300px;">
+                                <div class="search">
+                                    <label for="country">Country</label><span style="color: red !important; display: inline; float: none;">*</span>      
+        
+                                    <form action="javascript:choice(selecta.value)">
+                                        
+                          <select id="selecta" name="selecta" class="form-control"></select>
+                          <input type="submit" value="Submit">
+                        </form>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <marquee style="background-color:red" id="BreakingNews" behavior="scroll" direction="right" onmouseover="this.stop();" onmouseout="this.start();">
+        <h5>breaking news</h5>
+
+
+    </marquee>
+    <div style="padding-left: 5%; color: red" id="date">
+
+    </div>
+
+
+
+    <div class="container" style="padding-left: 20%;">
+
+        <img style="height: 90px; width: 210px; margin-left: 170px;" src="image/transparent-live-animated-gif-12.gif">
+
+
+        <div class="row">
+
+
+
+            <div class="col-md-12 row ">
+
+                <div class="col-md-4 ">
+                    <h2 style="color: black;">Active cases </h2>
+                    <br>
+
+                    <div id="global-id" >
+
+                     
+
+                    </div>
+                    <br>
+
+                </div>
+
+                <div class="col-md-4">
+                    <h2><span style="color: red;">Deathes</span></h2>
+                    <br>
+                    <div id="Deathes-id">
+
+
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    <h2><span style="color: green;">Recoved</span></h2>
+                    <br>
+                    <div id="recovered-id">
+
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+   
+    </script>
+
+    <div id="chartContainer1" style="height: 300px; width: 100%;"></div>
+
+
+
+
+
+
+    <br>
+    <br>
+    <br>
+
+ 
+
+
+
+
+
+
+
+
+
+
+    <script src="js/jquery-3.3.1.slim.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
+</body>
+
+</html>
